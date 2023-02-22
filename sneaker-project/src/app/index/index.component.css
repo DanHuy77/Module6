@@ -1,0 +1,7 @@
+.card:hover{
+  cursor: pointer;
+  border: solid 0.5px;
+}
+.card:hover p{
+
+}

@@ -1,0 +1,26 @@
+.btn {
+  border: solid black 1px;
+  color: black;
+  width: 5rem;
+}
+
+.btn-outline-light:hover {
+  background-color: black;
+}
+
+.btn:hover {
+  color: white;
+  border: solid black 1px;
+}
+
+.card:hover {
+  border: solid 0.5px;
+}
+
+.indicators-image:hover{
+  margin-bottom: 1rem;
+}
+.active-card:hover{
+  cursor: pointer;
+}
+

@@ -1,0 +1,134 @@
+<div class="container-fluid mt-5 mb-5">
+  <div class="row">
+    <div class="col-lg-1">
+
+    </div>
+    <div class="col-lg-6">
+      <div class="card card-body w-100">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+          <div class="carousel-indicators" style="margin-bottom: -1rem">
+            <button (click)="changeImage(item.url)" *ngFor="let item of imageList" style="width: 5rem;" type="button"
+                    class="active rounded ms-1">
+              <img src="{{item.url}}"
+                   class="d-block w-100" alt="Click me!">
+              <!--                style="border: inset #585858 4px; border-radius: 1px"-->
+
+            </button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="{{url}}"
+                class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <div class="mt-5">
+        <hr>
+        <br>
+        <p style="font-weight: bold">Description</p>
+        <div class="row mt-5">
+          <div class="col-lg-6">
+            <h3>
+              {{sneakerDetail.descriptionTitle}}
+            </h3>
+            <br>
+            <span>{{sneakerDetail.description}}</span>
+          </div>
+          <div class="col-lg-6">
+            <img style="width: 22rem"
+                 src="{{imageList[1].url}}">
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="col-lg-4">
+      <div class="row sticky-top">
+        <div class="card card-body w-100">
+          <p>
+            <span *ngIf="sneakerDetail.gender">Men</span>
+            <span *ngIf="!sneakerDetail.gender">Women</span>
+            - {{sneakerDetail?.category?.categoryName}}</p>
+          <h2>{{sneakerDetail.sneakerName}}</h2>
+          <p style="font-weight: bold">${{sneakerDetail.price}}</p>
+          <p>{{sneakerDetail.color}}</p>
+          <b>Sizes</b>
+          <div>
+            <button (click)="chooseSize(item.size, item.remainQuantity)" id="size-btn"
+                    *ngFor="let item of sneakerDetailList"
+                    class="btn btn-outline-light">
+              {{item.size}}
+            </button>
+          </div>
+          <div>
+            <span *ngIf="chosenSize == null">Click on above button to choose size</span>
+            <span *ngIf="chosenSize != null">Size {{chosenSize}} - Remain Quantity: {{remainQuantity}}</span>
+          </div>
+          <div class="mt-4">
+            <button style="width: 21rem; height: 4rem; color: white" class="btn btn-dark">Add to Cart <i
+              class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-11">
+      <div class="mt-4">
+
+        <br>
+        <h2>
+          YOU MAY ALSO LIKE
+        </h2>
+        <br>
+        <div class="d-flex mx-auto">
+          <div class="card active-card" style="width: 20rem;">
+            <img
+              src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/68ae7ea7849b43eca70aac1e00f5146d_9366/Stan_Smith_Shoes_White_FX5502_01_standard.jpg"
+              class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">STAN SMITH SHOES</p>
+              <p>Cloud White / Cloud White / Green</p>
+              <p>Originals</p>
+            </div>
+          </div>
+          <div class="card active-card" style="width: 20rem;">
+            <img
+              src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/62d96641e799450fbbdfad0800cb06ed_9366/NMD_R1_Primeblue_Shoes_Black_GZ9256_01_standard.jpg"
+              class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">NMD_R1 PRIMEBLUE SHOES</p>
+              <p>Core Black / Core Black / Core Black</p>
+              <p>Originals</p>
+            </div>
+          </div>
+          <div class="card active-card" style="width: 20rem;">
+            <img
+              src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/e01dea68cf93434bae5aac0900af99e8_9366/Stan_Smith_Shoes_White_FX5500_01_standard.jpg"
+              class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">STAN SMITH SHOES</p>
+              <p>Cloud White / Cloud White / Core Black</p>
+              <p>Originals</p>
+            </div>
+          </div>
+          <div class="card active-card" style="width: 20rem;">
+            <img
+              src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/15f901c90a9549d29104aae700d27efb_9366/SUPERSTAR_SHOES_Black_EG4959_01_standard.jpg"
+              class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">
+                3924 SUPERSTAR SHOES</p>
+              <p>Core Black / Cloud White / Core Black</p>
+              <p>Originals</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
