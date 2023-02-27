@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface IAccountRepository extends JpaRepository<Account, Integer> {
     @Query(value = "update account set deleted = true where id = :id", nativeQuery = true)
     void removeAccount(@Param("id") Integer id);
+
+    Account findAccountByUserName(String username);
 }

@@ -33,4 +33,9 @@ public class AccountService implements IAccountService {
     public void delete(Integer id) {
         accountRepository.removeAccount(id);
     }
+
+    @Override
+    public Account findAccountByUserName(String username) {
+        return accountRepository.findAccountByUserName(username);
+    }
 }

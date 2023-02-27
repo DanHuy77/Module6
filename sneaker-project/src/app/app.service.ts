@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Sneaker} from './model/Sneaker';
+import {LoginForm} from './model/loginForm';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class AppService {
 
   getSneakerDetail(id: number): Observable<any> {
     return this.httpClient.get<any>('http://localhost:8080/sneaker/detail?id=' + id);
+  }
+
+  login(loginForm: LoginForm): Observable<any> {
+    return this.httpClient.post('http://localhost:8080/api/public/login', loginForm);
   }
 }

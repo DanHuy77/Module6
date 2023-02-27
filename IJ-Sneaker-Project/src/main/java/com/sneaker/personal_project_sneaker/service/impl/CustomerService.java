@@ -33,4 +33,9 @@ public class CustomerService implements ICustomerService {
     public void delete(Integer id) {
         customerRepository.removeCustomer(id);
     }
+
+    @Override
+    public Customer findCustomerByAccount_Id(Integer id) {
+        return customerRepository.findCustomerByAccount_Id(id);
+    }
 }
