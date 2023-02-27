@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '../app.service';
 import {dashCaseToCamelCase} from '@angular/compiler/src/util';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -28,12 +30,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   onSubmit(): void {
     console.log(this.formGroup.value);
     this.appService.login(this.formGroup.value).subscribe(data => {
       alert('Đã đăng nhập');
+      this.username = localStorage.getItem('username');
+      console.log(this.username);
       this.router.navigateByUrl('/');
     });
+  }
+
+  logOut(): void {
+    window.localStorage.clear();
   }
 }
