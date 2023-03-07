@@ -6,7 +6,7 @@
       <h4 class="card-title mb-4">Sign in</h4>
       <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <input name="" class="form-control" placeholder="Username" type="text" formControlName="username">
+          <input name="" class="form-control" placeholder="Username" type="text" formControlName="email">
         </div> <!-- form-group// -->
         <div class="form-group">
           <input name="" class="form-control" placeholder="Password" type="password" formControlName="password">
@@ -20,13 +20,13 @@
           </label>
         </div> <!-- form-group form-check .// -->
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block"> Login</button>
+          <button type="submit" class="btn btn-color btn-block"> Sign in</button>
         </div> <!-- form-group// -->
       </form>
     </div> <!-- card-body.// -->
   </div> <!-- card .// -->
 
-  <p class="text-center mt-4" style="color: white">Don't have account? <a class="btn btn-primary" href="#">Sign up</a>
+  <p class="text-center mt-4" style="color: white">Don't have account? <a class="btn btn-color" href="#">Sign up</a>
   </p>
   <br><br>
   <!-- ============================ COMPONENT LOGIN  END.// ================================= -->

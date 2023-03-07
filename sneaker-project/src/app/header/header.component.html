@@ -29,8 +29,10 @@
               <div class="text">
                 <span class="text-muted">Welcome!</span>
                 <div>
-                  <a href="#">Sign in</a> |
-                  <a href="#"> Register</a>
+                  <a *ngIf="isSignedIn == false" routerLink="/login">Sign in</a>
+                  <span *ngIf="isSignedIn == true">{{userName}}</span> |
+                  <a routerLink="/" *ngIf="isSignedIn == false"> Register</a>
+                  <a class="so-btn" (click)="signOut()" *ngIf="isSignedIn == true">Sign out</a>
                 </div>
               </div>
             </div>
@@ -42,7 +44,7 @@
   </section> <!-- header-main .// -->
 
 
-  <nav style="background-color: #e60f0f" class="navbar navbar-main navbar-expand-lg navbar-light border-bottom">
+  <nav style="background-color: #dc3545" class="navbar navbar-main navbar-expand-lg navbar-light border-bottom">
     <div class="container">
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

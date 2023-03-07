@@ -5,6 +5,8 @@ import {AppService} from '../app.service';
 import {dashCaseToCamelCase} from '@angular/compiler/src/util';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {Token} from '@angular/compiler';
+import {TokenService} from '../service/token.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ import {map} from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup = new FormGroup({
-    username: new FormControl(),
+    email: new FormControl(),
     password: new FormControl()
   });
   username: string;
@@ -24,23 +26,36 @@ export class LoginComponent implements OnInit {
   constructor(private formBuild: FormBuilder,
               private appService: AppService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private tokenService: TokenService) {
   }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    console.log(this.formGroup.value);
     this.appService.login(this.formGroup.value).subscribe(data => {
-      alert('Đã đăng nhập');
-      this.username = localStorage.getItem('username');
-      console.log(this.username);
-      this.router.navigateByUrl('/');
-    });
-  }
+      if (data.status === 202){
+        window.localStorage.clear();
+        alert('Sai tài khoản');
+        this.formGroup.reset();
+      } else {
+        console.log(data);
+        this.tokenService.setIdAccount(data.id);
+        this.tokenService.setIdCustomer(data.idCustomer);
+        this.tokenService.setName(data.name);
+        this.tokenService.setEmail(data.email);
+        this.tokenService.setToken(data.token);
+        this.tokenService.setRole(data.roles);
+        console.log(data.id);
+        alert('Đã đăng nhập');
+        this.username = localStorage.getItem('username');
+        console.log(this.username);
+        location.reload();
+        location.href = '/';
+      }
+    }, error => {
 
-  logOut(): void {
-    window.localStorage.clear();
+    });
   }
 }

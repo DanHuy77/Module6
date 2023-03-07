@@ -11,5 +11,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "update customer set deleted = true where id = :id", nativeQuery = true)
     void removeCustomer(@Param("id") Integer id);
 
-    Customer findCustomerByAccount_Id(Integer id);
+//    Customer findCustomerByAccount_Id(Integer id);
+
+    Customer findCustomerByEmail (String email);
 }

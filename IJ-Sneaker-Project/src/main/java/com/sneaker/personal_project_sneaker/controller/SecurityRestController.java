@@ -1,70 +1,85 @@
 package com.sneaker.personal_project_sneaker.controller;
 
-import com.sneaker.personal_project_sneaker.entity.Account;
-import com.sneaker.personal_project_sneaker.entity.Customer;
-import com.sneaker.personal_project_sneaker.jwt.JwtUtility;
-import com.sneaker.personal_project_sneaker.payload.request.LoginRequest;
-import com.sneaker.personal_project_sneaker.payload.response.JwtResponse;
+import com.sneaker.personal_project_sneaker.dto.GetIdCustomerView;
+import com.sneaker.personal_project_sneaker.dto.request.SignInForm;
+import com.sneaker.personal_project_sneaker.dto.response.JwtResponse;
+import com.sneaker.personal_project_sneaker.jwt.jwt.JwtProvider;
+import com.sneaker.personal_project_sneaker.jwt.jwt.JwtTokenFilter;
+import com.sneaker.personal_project_sneaker.jwt.userprincal.AccountPrinciple;
+import com.sneaker.personal_project_sneaker.service.IAccountService;
 import com.sneaker.personal_project_sneaker.service.ICustomerService;
-import com.sneaker.personal_project_sneaker.service.impl.AccountService;
-import com.sneaker.personal_project_sneaker.service.impl.JwtUserDetailsService;
-import com.sneaker.personal_project_sneaker.service.impl.RoleService;
-import com.sneaker.personal_project_sneaker.service.impl.UserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import com.sneaker.personal_project_sneaker.service.IRoleService;
+import com.sneaker.personal_project_sneaker.service.IStaffService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/public")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SecurityRestController {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityRestController.class);
+    private final
+    IAccountService accountService;
 
-    @Autowired
-    private JwtUtility jwtUtility;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    UserDetailsService userDetailsService;
+    private final
+    IRoleService roleService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest)
-            throws Exception {
+    private final
+    PasswordEncoder passwordEncoder;
 
-        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+    private final
+    AuthenticationManager authenticationManager;
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+    private final
+    JwtProvider jwtProvider;
+    private final
+    JwtTokenFilter jwtTokenFilter;
+    private final ICustomerService customerService;
+    private final IStaffService staffService;
+//    private final SendMail sendMail;
 
-        final String token = jwtUtility.generateToken(userDetails);
-
-        return ResponseEntity.ok(new JwtResponse(token));
+    public SecurityRestController(
+//            SendMail sendMail,
+            IAccountService accountService, IRoleService roleService, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtProvider jwtProvider, JwtTokenFilter jwtTokenFilter, ICustomerService customerService, IStaffService staffService) {
+        this.accountService = accountService;
+        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtProvider = jwtProvider;
+        this.jwtTokenFilter = jwtTokenFilter;
+        this.customerService = customerService;
+        this.staffService = staffService;
+//        this.sendMail = sendMail;
     }
 
-    private void authenticate(String username, String password) throws Exception {
-        Objects.requireNonNull(username);
-        Objects.requireNonNull(password);
+    @PostMapping("/signin")
+    public ResponseEntity<?> login( @RequestBody SignInForm signInForm) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signInForm.getEmail(), signInForm.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
+        String token = jwtProvider.createToken(authentication);
+        AccountPrinciple accountPrinciple = (AccountPrinciple) authentication.getPrincipal();
+        Integer idCustomer = customerService.findCustomerByEmail(signInForm.getEmail()).getId();
+        return ResponseEntity.ok(new JwtResponse(token,
+                accountPrinciple.getName(),
+                accountPrinciple.getAuthorities(),
+                accountPrinciple.getId(),
+                accountPrinciple.getEmail(),
+                accountPrinciple.getAvatar(),
+                idCustomer,
+                accountPrinciple.getAnony()));
     }
 }

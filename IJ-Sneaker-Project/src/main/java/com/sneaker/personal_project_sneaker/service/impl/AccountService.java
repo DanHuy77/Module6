@@ -1,12 +1,14 @@
 package com.sneaker.personal_project_sneaker.service.impl;
 
-import com.sneaker.personal_project_sneaker.entity.Account;
+import com.sneaker.personal_project_sneaker.account.Account;
 import com.sneaker.personal_project_sneaker.repository.IAccountRepository;
 import com.sneaker.personal_project_sneaker.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AccountService implements IAccountService {
@@ -35,7 +37,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account findAccountByUserName(String username) {
-        return accountRepository.findAccountByUserName(username);
+    public Optional<Account> findAccountByUserName(String username) {
+        return accountRepository.findAccountByEmail(username);
     }
 }

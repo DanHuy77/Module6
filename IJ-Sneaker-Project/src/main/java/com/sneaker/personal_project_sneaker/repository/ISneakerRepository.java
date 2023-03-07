@@ -39,4 +39,6 @@ public interface ISneakerRepository extends JpaRepository<Sneaker, Integer> {
                     "group by sneaker.sneaker_id " +
                     "order by sneakerId desc ")
     Page<SneakerDto> getSneakerWithImage(Pageable pageable);
+
+
 }

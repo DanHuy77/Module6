@@ -1,6 +1,6 @@
 package com.sneaker.personal_project_sneaker.repository;
 
-import com.sneaker.personal_project_sneaker.entity.Role;
+import com.sneaker.personal_project_sneaker.account.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -34,8 +34,13 @@ public class CustomerService implements ICustomerService {
         customerRepository.removeCustomer(id);
     }
 
+//    @Override
+//    public Customer findCustomerByAccount_Id(Integer id) {
+//        return customerRepository.findCustomerByAccount_Id(id);
+//    }
+
     @Override
-    public Customer findCustomerByAccount_Id(Integer id) {
-        return customerRepository.findCustomerByAccount_Id(id);
+    public Customer findCustomerByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email);
     }
 }

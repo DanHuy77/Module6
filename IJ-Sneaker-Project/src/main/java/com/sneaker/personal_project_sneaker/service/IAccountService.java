@@ -1,7 +1,9 @@
 package com.sneaker.personal_project_sneaker.service;
 
-import com.sneaker.personal_project_sneaker.entity.Account;
+import com.sneaker.personal_project_sneaker.account.Account;
+
+import java.util.Optional;
 
 public interface IAccountService extends IGeneralService<Account>{
-    Account findAccountByUserName(String username);
+    Optional<Account> findAccountByUserName(String username);
 }

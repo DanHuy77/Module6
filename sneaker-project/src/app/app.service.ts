@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Sneaker} from './model/Sneaker';
 import {LoginForm} from './model/loginForm';
+import {JwtResponse} from './dto/JwtResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class AppService {
   }
 
   login(loginForm: LoginForm): Observable<any> {
-    return this.httpClient.post('http://localhost:8080/api/public/login', loginForm);
+    console.log(loginForm);
+    return this.httpClient.post<JwtResponse>('http://localhost:8080/api/public/signin', loginForm);
   }
 }

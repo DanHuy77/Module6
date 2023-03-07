@@ -1,5 +1,7 @@
 package com.sneaker.personal_project_sneaker.entity;
 
+import com.sneaker.personal_project_sneaker.account.Account;
+
 import javax.persistence.*;
 
 @Entity
