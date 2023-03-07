@@ -15,7 +15,7 @@ export class ShareService {
     return this.key.asObservable();
   }
 
-  setKey(key: string): void {
+  setKey(key: any): void {
     this.key.next(key);
   }
 }

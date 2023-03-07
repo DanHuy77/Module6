@@ -24,6 +24,7 @@ public interface ISneakerRepository extends JpaRepository<Sneaker, Integer> {
             "on sneaker.category_category_id = category.category_id " +
             "join image " +
             "on image.sneaker_sneaker_id = sneaker.sneaker_id " +
+            "where sneaker.sneaker_name like %:key% or sneaker.color like %:key% or sneaker.producer like %:key% " +
             "group by sneaker.sneaker_id " +
             "order by sneakerId desc ", nativeQuery = true,
             countQuery = "select sneaker.sneaker_id sneakerId" +
@@ -36,9 +37,10 @@ public interface ISneakerRepository extends JpaRepository<Sneaker, Integer> {
                     "on sneaker.category_category_id = category.category_id " +
                     "join image " +
                     "on image.sneaker_sneaker_id = sneaker.sneaker_id " +
+                    "where sneaker.sneaker_name like %:key% or sneaker.color like %:key% or sneaker.producer like %:key% " +
                     "group by sneaker.sneaker_id " +
                     "order by sneakerId desc ")
-    Page<SneakerDto> getSneakerWithImage(Pageable pageable);
+    Page<SneakerDto> getSneakerWithImage(@Param("key")String key, Pageable pageable);
 
     @Query(value = "select sneaker.* from sneaker where sneaker.sneaker_name like %:key% or sneaker.color like %:key%",
             nativeQuery = true,

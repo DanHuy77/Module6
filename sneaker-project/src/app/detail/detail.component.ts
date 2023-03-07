@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Image} from '../model/Image';
 import {Sneaker} from '../model/Sneaker';
 import {SneakerDetailList} from '../model/Sneaker-detail-list';
+import {TokenService} from '../service/token.service';
 
 @Component({
   selector: 'app-detail',
@@ -17,9 +18,12 @@ export class DetailComponent implements OnInit {
   sneakerDetailList: SneakerDetailList[] = [];
   chosenSize: string | null;
   remainQuantity = 0;
+  sneakerDetailId: number;
+  accountId: number;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private appService: AppService) {
+              private appService: AppService,
+              private tokenService: TokenService) {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       if (id != null) {
@@ -33,6 +37,9 @@ export class DetailComponent implements OnInit {
         this.url = this.imageList[0].url;
       });
     });
+    if (this.tokenService.getToken()) {
+      this.accountId = Number(this.tokenService.getIdAccount());
+    }
   }
 
   ngOnInit(): void {
@@ -43,8 +50,15 @@ export class DetailComponent implements OnInit {
     this.url = url;
   }
 
-  chooseSize(size: string, remainQuantity: number): void {
+  chooseSize(id: number, size: string, remainQuantity: number): void {
     this.chosenSize = size;
     this.remainQuantity = remainQuantity;
+    this.sneakerDetailId = id;
+  }
+
+  addToCart(): void {
+    this.appService.addToCart(this.sneakerDetailId, this.accountId).subscribe(data => {
+      alert('Đã thêm vào giỏ hàng');
+    });
   }
 }

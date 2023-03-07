@@ -24,3 +24,7 @@
   cursor: pointer;
 }
 
+.click:focus{
+  background-color: black;
+  color: white;
+}

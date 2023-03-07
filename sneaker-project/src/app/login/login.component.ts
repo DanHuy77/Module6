@@ -35,14 +35,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.appService.login(this.formGroup.value).subscribe(data => {
-      if (data.status === 202){
+      if (data.status === 202) {
         window.localStorage.clear();
         alert('Sai tài khoản');
         this.formGroup.reset();
       } else {
         console.log(data);
         this.tokenService.setIdAccount(data.id);
-        this.tokenService.setIdCustomer(data.idCustomer);
+        if (data.idCustomer !== null) {
+          this.tokenService.setIdCustomer(data.idCustomer);
+        }
         this.tokenService.setName(data.name);
         this.tokenService.setEmail(data.email);
         this.tokenService.setToken(data.token);

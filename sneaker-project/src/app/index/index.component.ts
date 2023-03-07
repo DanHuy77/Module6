@@ -20,13 +20,15 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.shareService.getKey().subscribe(data => {
-      this.appService.searchSneakerByKey(data).subscribe(sneakers => {
-        this.sneakerList = sneakers.content;
-      });
+      this.keySearch = data;
+      this.getSneaker(this.keySearch);
     });
-    this.appService.getAllSneaker().subscribe(data => {
-      this.sneakerList = data.content;
-      console.log(this.sneakerList);
+  }
+
+  getSneaker(key: string): void {
+    this.appService.searchSneakerByKey(key).subscribe(sneakers => {
+      console.log(this.keySearch);
+      this.sneakerList = sneakers.content;
     });
   }
 }

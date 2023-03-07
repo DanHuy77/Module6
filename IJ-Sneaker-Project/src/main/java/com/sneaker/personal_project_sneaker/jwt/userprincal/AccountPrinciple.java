@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class AccountPrinciple implements UserDetails {
     @Autowired
     JwtProvider jwtProvider;
-    private Long id;
+    private Integer id;
     private String name;
     private String email;
     @JsonIgnore
@@ -30,7 +30,7 @@ public class AccountPrinciple implements UserDetails {
         return roles;
     }
 
-    public AccountPrinciple(Long id, String name, String email, String encryptPassword, String avatar, Collection<? extends GrantedAuthority> roles, String anony) {
+    public AccountPrinciple(Integer id, String name, String email, String encryptPassword, String avatar, Collection<? extends GrantedAuthority> roles, String anony) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -62,11 +62,11 @@ public class AccountPrinciple implements UserDetails {
         this.anony = anony;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

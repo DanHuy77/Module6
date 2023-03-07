@@ -36,8 +36,8 @@ public class SneakerService implements ISneakerService {
     }
 
     @Override
-    public Page<SneakerDto> getSneakerWithImage(Pageable pageable) {
-        return sneakerRepository.getSneakerWithImage(pageable);
+    public Page<SneakerDto> getSneakerWithImage(String key, Pageable pageable) {
+        return sneakerRepository.getSneakerWithImage(key, pageable);
     }
 
     @Override

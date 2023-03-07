@@ -1,13 +1,11 @@
 package com.sneaker.personal_project_sneaker.dto.response;
 
-import com.sneaker.personal_project_sneaker.dto.GetIdCustomerView;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public class JwtResponse {
-    private Long id;
+    private Integer id;
     private String token;
     private String type = "Bearer";
     private String name;
@@ -20,7 +18,7 @@ public class JwtResponse {
     public JwtResponse() {
     }
 
-    public JwtResponse(Long id, String token, String type, String name, String avatar, String email, Collection<? extends GrantedAuthority> roles) {
+    public JwtResponse(Integer id, String token, String type, String name, String avatar, String email, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.token = token;
         this.type = type;
@@ -30,7 +28,7 @@ public class JwtResponse {
         this.roles = roles;
     }
 
-    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Long id, String email, String avatar, Integer idCustomer, String anony) {
+    public JwtResponse(String token, String name, Collection<? extends GrantedAuthority> authorities, Integer id, String email, String avatar, Integer idCustomer, String anony) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
@@ -57,11 +55,11 @@ public class JwtResponse {
         this.idCustomer = idCustomer;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

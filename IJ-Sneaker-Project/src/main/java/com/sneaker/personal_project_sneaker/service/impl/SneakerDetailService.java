@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SneakerDetailService implements ISneakerDetailService {
 
@@ -32,5 +34,10 @@ public class SneakerDetailService implements ISneakerDetailService {
     @Override
     public void delete(Integer id) {
 
+    }
+
+    @Override
+    public List<SneakerDetail> findSneakerDetailsByAccount_IdAccount(Integer accountId) {
+        return sneakerDetailRepository.findSneakerDetailsByAccount_IdAccount(accountId);
     }
 }

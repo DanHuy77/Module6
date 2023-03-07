@@ -48,6 +48,11 @@ export class AppService {
   }
 
   searchSneakerByKey(key: string): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:8080/sneaker/search?key=' + key);
+    return this.httpClient.get<any>('http://localhost:8080/sneaker?key=' + key);
+  }
+
+  addToCart(sneakerDetailId: number, accountId: number): Observable<any> {
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.get<any>('http://localhost:8080/sneaker/addToCart?sneakerDetailId=' + sneakerDetailId + '&accountId=' + accountId);
   }
 }

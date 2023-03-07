@@ -12,9 +12,6 @@ import {ShareService} from '../service/share.service';
 export class HeaderComponent implements OnInit {
   isSignedIn = false;
   userName = '';
-  formSearch: FormGroup = new FormGroup({
-    key: new FormControl()
-  });
 
   constructor(private tokenService: TokenService,
               private router: Router,
@@ -33,7 +30,8 @@ export class HeaderComponent implements OnInit {
     location.href = '/login';
   }
 
-  submitSearch(): void {
-    this.shareService.setKey(this.formSearch.value);
+  submitSearch(key: string): void {
+    this.shareService.setKey(key);
+    this.router.navigateByUrl('/');
   }
 }

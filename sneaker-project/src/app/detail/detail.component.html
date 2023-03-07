@@ -57,9 +57,9 @@
           <p>{{sneakerDetail.color}}</p>
           <b>Sizes</b>
           <div>
-            <button (click)="chooseSize(item.size, item.remainQuantity)" id="size-btn"
+            <button (click)="chooseSize(item.id, item.size, item.remainQuantity)" id="size-btn"
                     *ngFor="let item of sneakerDetailList"
-                    class="btn btn-outline-light">
+                    class="btn btn-light click">
               {{item.size}}
             </button>
           </div>
@@ -68,7 +68,7 @@
             <span *ngIf="chosenSize != null">Size {{chosenSize}} - Remain Quantity: {{remainQuantity}}</span>
           </div>
           <div class="mt-4">
-            <button style="width: 21rem; height: 4rem; color: white" class="btn btn-dark">Add to Cart <i
+            <button (click)="addToCart()" style="width: 21rem; height: 4rem; color: white" class="btn btn-dark">Add to Cart <i
               class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>

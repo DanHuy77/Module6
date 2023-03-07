@@ -3101,7 +3101,7 @@ textarea.form-control-lg {
 }
 
 .btn-check:checked + .btn-primary-light:focus, .btn-check:active + .btn-primary-light:focus, .btn-primary-light:active:focus, .btn-primary-light.active:focus, .show > .btn-primary-light.dropdown-toggle:focus {
-  box-shadow: 0 0 0 .2rem rgba(186, 198, 217, .5)
+  box-shadow: 0 0 0 .2rem rgba(186, 198, 217, 0.5);
 }
 
 .btn-primary-light:disabled, .btn-primary-light.disabled {

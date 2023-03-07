@@ -1,7 +1,10 @@
 package com.sneaker.personal_project_sneaker.controller;
 
+import com.sneaker.personal_project_sneaker.account.Account;
 import com.sneaker.personal_project_sneaker.dto.SneakerDto;
 import com.sneaker.personal_project_sneaker.entity.Sneaker;
+import com.sneaker.personal_project_sneaker.entity.SneakerDetail;
+import com.sneaker.personal_project_sneaker.service.IAccountService;
 import com.sneaker.personal_project_sneaker.service.ISneakerDetailService;
 import com.sneaker.personal_project_sneaker.service.ISneakerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/sneaker")
@@ -20,16 +25,18 @@ public class SneakerRestController {
     private ISneakerService sneakerService;
     @Autowired
     private ISneakerDetailService sneakerDetailService;
+    @Autowired
+    private IAccountService accountService;
 
     @GetMapping("")
-    public ResponseEntity<Page<SneakerDto>> getAllSneaker() {
+    public ResponseEntity<Page<SneakerDto>> getAllSneaker(@RequestParam(defaultValue = "") String key) {
         Pageable pageable = Pageable.ofSize(8);
 //        Page<Sneaker> sneakerPage = sneakerService.findAll(pageable);
 //        if (sneakerPage.isEmpty()) {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
 //        return new ResponseEntity<>(sneakerPage, HttpStatus.OK);
-        Page<SneakerDto> sneakerDtoPage = sneakerService.getSneakerWithImage(pageable);
+        Page<SneakerDto> sneakerDtoPage = sneakerService.getSneakerWithImage(key, pageable);
         if (sneakerDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -78,5 +85,20 @@ public class SneakerRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(searchPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/addToCart")
+    public ResponseEntity<HttpStatus> addToCart(@RequestParam Integer sneakerDetailId, @RequestParam Integer accountId) {
+        SneakerDetail sneakerDetail = sneakerDetailService.findById(sneakerDetailId);
+        Account account = accountService.findById(accountId);
+        sneakerDetail.setAccount(account);
+        sneakerDetailService.save(sneakerDetail);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/showCart")
+    public ResponseEntity<List<SneakerDetail>> showCart(@RequestParam Integer accountId) {
+        List<SneakerDetail> sneakerDetailList = sneakerDetailService.findSneakerDetailsByAccount_IdAccount(accountId);
+        return new ResponseEntity<>(sneakerDetailList, HttpStatus.OK);
     }
 }

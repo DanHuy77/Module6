@@ -1,7 +1,5 @@
 package com.sneaker.personal_project_sneaker.account;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,7 +18,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAccount;
+    private Integer idAccount;
 
     private String name;
 
@@ -50,7 +48,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long idAccount, String name, String avatar, String email, String encryptPassword, String anony, boolean flagDelete, Set<Role> roles, Date createDate, Date modifyDate) {
+    public Account(Integer idAccount, String name, String avatar, String email, String encryptPassword, String anony, boolean flagDelete, Set<Role> roles, Date createDate, Date modifyDate) {
         this.idAccount = idAccount;
         this.name = name;
         this.avatar = avatar;
@@ -71,11 +69,11 @@ public class Account {
         this.anony = anony;
     }
 
-    public Long getIdAccount() {
+    public Integer getIdAccount() {
         return idAccount;
     }
 
-    public void setIdAccount(Long idAccount) {
+    public void setIdAccount(Integer idAccount) {
         this.idAccount = idAccount;
     }
 

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 public interface ISneakerService extends IGeneralService<Sneaker> {
-    Page<SneakerDto> getSneakerWithImage(Pageable pageable);
+    Page<SneakerDto> getSneakerWithImage(@Param("key")String key, Pageable pageable);
 
     Page<Sneaker> getSneakerByKey(@Param("key")String key, Pageable pageable);
 }
