@@ -46,4 +46,8 @@ export class AppService {
     console.log(loginForm);
     return this.httpClient.post<JwtResponse>('http://localhost:8080/api/public/signin', loginForm);
   }
+
+  searchSneakerByKey(key: string): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/sneaker/search?key=' + key);
+  }
 }

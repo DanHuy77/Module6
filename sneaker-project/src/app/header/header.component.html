@@ -7,9 +7,9 @@
                src="https://firebasestorage.googleapis.com/v0/b/huydn-2918b.appspot.com/o/default.png?alt=media&token=5fc6c06e-0b03-43d7-998e-55a96c0601d5">
         </div>
         <div class="col-lg-6 col-sm-12">
-          <form action="#" class="search">
+          <form [formGroup]="formSearch" (ngSubmit)="submitSearch()" class="search">
             <div class="input-group w-100">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" class="form-control" placeholder="Search" formControlName="key">
               <div class="input-group-append">
                 <button class="btn btn-dark" type="submit">
                   <i class="fa fa-search"></i>

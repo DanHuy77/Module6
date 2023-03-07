@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenService} from '../service/token.service';
 import {Router} from '@angular/router';
+import {FormControl, FormGroup} from '@angular/forms';
+import {ShareService} from '../service/share.service';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +10,19 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-isSignedIn = false;
-userName = '';
+  isSignedIn = false;
+  userName = '';
+  formSearch: FormGroup = new FormGroup({
+    key: new FormControl()
+  });
+
   constructor(private tokenService: TokenService,
-              private router: Router) { }
+              private router: Router,
+              private shareService: ShareService) {
+  }
 
   ngOnInit(): void {
-    if (this.tokenService.getToken()){
+    if (this.tokenService.getToken()) {
       this.isSignedIn = true;
       this.userName = this.tokenService.getName();
     }
@@ -23,5 +31,9 @@ userName = '';
   signOut(): void {
     window.localStorage.clear();
     location.href = '/login';
+  }
+
+  submitSearch(): void {
+    this.shareService.setKey(this.formSearch.value);
   }
 }

@@ -40,5 +40,8 @@ public interface ISneakerRepository extends JpaRepository<Sneaker, Integer> {
                     "order by sneakerId desc ")
     Page<SneakerDto> getSneakerWithImage(Pageable pageable);
 
-
+    @Query(value = "select sneaker.* from sneaker where sneaker.sneaker_name like %:key% or sneaker.color like %:key%",
+            nativeQuery = true,
+    countQuery = "select sneaker.* from sneaker where sneaker.sneaker_name like %:key% or sneaker.color like %:key%")
+            Page<Sneaker> getSneakerByKey(@Param("key")String key, Pageable pageable);
 }

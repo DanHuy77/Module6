@@ -4,7 +4,6 @@ import com.sneaker.personal_project_sneaker.dto.SneakerDto;
 import com.sneaker.personal_project_sneaker.entity.Sneaker;
 import com.sneaker.personal_project_sneaker.service.ISneakerDetailService;
 import com.sneaker.personal_project_sneaker.service.ISneakerService;
-import com.sun.javafx.iio.gif.GIFImageLoaderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,5 +69,14 @@ public class SneakerRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(sneaker, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Sneaker>> getSneakerBySearchKey(@RequestParam(defaultValue = "") String key, Pageable pageable) {
+        Page<Sneaker> searchPage = sneakerService.getSneakerByKey(key, pageable);
+        if (searchPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(searchPage, HttpStatus.OK);
     }
 }
