@@ -1,5 +1,6 @@
 package com.sneaker.personal_project_sneaker.service.impl;
 
+import com.sneaker.personal_project_sneaker.dto.SneakerDetailDto;
 import com.sneaker.personal_project_sneaker.entity.SneakerDetail;
 import com.sneaker.personal_project_sneaker.repository.ISneakerDetailRepository;
 import com.sneaker.personal_project_sneaker.service.ISneakerDetailService;
@@ -39,5 +40,10 @@ public class SneakerDetailService implements ISneakerDetailService {
     @Override
     public List<SneakerDetail> findSneakerDetailsByAccount_IdAccount(Integer accountId) {
         return sneakerDetailRepository.findSneakerDetailsByAccount_IdAccount(accountId);
+    }
+
+    @Override
+    public Page<SneakerDetailDto> getCustomerCart(Integer accountId, Pageable pageable) {
+        return sneakerDetailRepository.getCustomerCart(accountId, pageable);
     }
 }

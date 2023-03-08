@@ -1,0 +1,165 @@
+<div class="row">
+  <main class="col-md-8">
+
+    <!--    <article class="card mb-4">-->
+    <!--      <div class="card-body">-->
+    <!--        <h4 class="card-title mb-4">Review cart</h4>-->
+    <!--        <div class="row">-->
+    <!--          <div class="col-md-6">-->
+    <!--            <figure class="itemside  mb-4">-->
+    <!--              <div class="aside"><img src="assets/images/items/1.jpg" class="border img-sm"></div>-->
+    <!--              <figcaption class="info">-->
+    <!--                <p>Apple iPad (2019) 32Gb Wi-Fi gold </p>-->
+    <!--                <span class="text-muted">2x = $560 </span>-->
+    <!--              </figcaption>-->
+    <!--            </figure>-->
+    <!--          </div> &lt;!&ndash; col.// &ndash;&gt;-->
+    <!--          <div class="col-md-6">-->
+    <!--            <figure class="itemside  mb-4">-->
+    <!--              <div class="aside"><img src="assets/images/items/2.jpg" class="border img-sm"></div>-->
+    <!--              <figcaption class="info">-->
+    <!--                <p>Apple iPad (2019) 32Gb Wi-Fi gold </p>-->
+    <!--                <span class="text-muted">2x = $560 </span>-->
+    <!--              </figcaption>-->
+    <!--            </figure>-->
+    <!--          </div> &lt;!&ndash; col.// &ndash;&gt;-->
+    <!--          <div class="col-md-6">-->
+    <!--            <figure class="itemside mb-4">-->
+    <!--              <div class="aside"><img src="assets/images/items/3.jpg" class="border img-sm"></div>-->
+    <!--              <figcaption class="info">-->
+    <!--                <p>Apple iPad (2019) 32Gb Wi-Fi gold </p>-->
+    <!--                <span class="text-muted">2x = $560 </span>-->
+    <!--              </figcaption>-->
+    <!--            </figure>-->
+    <!--          </div> &lt;!&ndash; col.// &ndash;&gt;-->
+    <!--          <div class="col-md-6">-->
+    <!--            <figure class="itemside  mb-4">-->
+    <!--              <div class="aside"><img src="assets/images/items/4.jpg" class="border img-sm"></div>-->
+    <!--              <figcaption class="info">-->
+    <!--                <p>Apple iPad (2019) 32Gb Wi-Fi gold </p>-->
+    <!--                <span class="text-muted">2x = $560 </span>-->
+    <!--              </figcaption>-->
+    <!--            </figure>-->
+    <!--          </div> &lt;!&ndash; col.// &ndash;&gt;-->
+    <!--        </div> &lt;!&ndash; row.// &ndash;&gt;-->
+    <!--      </div> &lt;!&ndash; card-body.// &ndash;&gt;-->
+    <!--    </article> &lt;!&ndash; card.// &ndash;&gt;-->
+
+
+    <article *ngIf="isSignin === false" class="card mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Contact info</h4>
+        <form action="">
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>First name</label>
+              <input type="text" placeholder="Type here" class="form-control">
+            </div>
+            <div class="form-group col-sm-6">
+              <label>Last name</label>
+              <input type="text" placeholder="Type here" class="form-control">
+            </div>
+            <div class="form-group col-sm-6">
+              <label>Phone</label>
+              <input type="text" value="+84" class="form-control">
+            </div>
+            <div class="form-group col-sm-6">
+              <label>Email</label>
+              <input type="email" placeholder="example@gmail.com" class="form-control">
+            </div>
+          </div> <!-- row.// -->
+        </form>
+      </div> <!-- card-body.// -->
+    </article> <!-- card.// -->
+
+
+    <article class="card mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Delivery info</h4>
+        <form action="">
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>Address*</label>
+              <input type="text" placeholder="Type here" class="form-control">
+            </div>
+            <div class="form-group col-sm-6">
+              <label>Phone Number*</label>
+              <input type="text" placeholder="Type here" class="form-control">
+            </div>
+          </div> <!-- row.// -->
+        </form>
+      </div> <!-- card-body.// -->
+    </article> <!-- card.// -->
+
+
+    <article class="accordion" id="accordion_pay">
+      <div class="card">
+        <header class="card-header">
+          <img
+            src="https://sedberkdesign.com/wp-content/uploads/2020/06/kisspng-paypal-logo-brand-font-payment-paypal-logo-icon-paypal-icon-logo-png-and-vecto-5b7f273e45e8a9.9067728615350597742864.png"
+            class="float-right" height="24">
+          <label class="form-check collapsed" data-toggle="collapse" data-target="#pay_paynet">
+            <input class="form-check-input" name="payment-option" checked="" type="radio" value="option2">
+            <h6 class="form-check-label">
+              Paypal
+            </h6>
+          </label>
+        </header>
+        <div id="pay_paynet" class="collapse show" data-parent="#accordion_pay">
+          <div class="card-body">
+            <div id="payPalBtn"></div>
+          </div> <!-- card body .// -->
+        </div> <!-- collapse .// -->
+      </div> <!-- card.// -->
+
+      <div class="card">
+        <header class="card-header">
+          <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/cod-1803633-1530847.png" class="float-right"
+               height="24">
+          <label class="form-check" data-toggle="collapse" data-target="#pay_card">
+            <input class="form-check-input" name="payment-option" type="radio" value="option1">
+            <h6 class="form-check-label"> COD </h6>
+          </label>
+        </header>
+        <div id="pay_card" class="collapse" data-parent="#accordion_pay">
+          <div class="card-body">
+            <p>
+              You will process the payment after the product had been checked.
+            </p>
+          </div> <!-- card body .// -->
+        </div> <!-- collapse .// -->
+      </div> <!-- card.// -->
+    </article>
+    <!-- accordion end.// -->
+
+  </main> <!-- col.// -->
+  <aside class="col-md-4">
+    <div class="card shadow">
+      <div class="card-body">
+        <h4 class="mb-3">Overview</h4>
+        <dl class="dlist-align">
+          <dt class="text-muted">Delivery:</dt>
+          <dd>Pick-up</dd>
+        </dl>
+        <dl class="dlist-align">
+          <dt class="text-muted">Delivery type:</dt>
+          <dd>Standart</dd>
+        </dl>
+        <dl class="dlist-align">
+          <dt class="text-muted">Payment method:</dt>
+          <dd>Cash</dd>
+        </dl>
+        <hr>
+        <dl class="dlist-align">
+          <dt>Total:</dt>
+          <dd class="h5">$300.50</dd>
+        </dl>
+        <hr>
+        <p class="small mb-3 text-muted">By clicking you are agree with terms of condition </p>
+        <a href="#" class="btn btn-primary btn-block"> Button </a>
+
+      </div> <!-- card-body.// -->
+    </div> <!-- card.// -->
+  </aside> <!-- col.// -->
+</div> <!-- row.// -->
+

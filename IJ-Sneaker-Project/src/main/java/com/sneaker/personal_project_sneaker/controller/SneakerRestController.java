@@ -1,6 +1,7 @@
 package com.sneaker.personal_project_sneaker.controller;
 
 import com.sneaker.personal_project_sneaker.account.Account;
+import com.sneaker.personal_project_sneaker.dto.SneakerDetailDto;
 import com.sneaker.personal_project_sneaker.dto.SneakerDto;
 import com.sneaker.personal_project_sneaker.entity.Sneaker;
 import com.sneaker.personal_project_sneaker.entity.SneakerDetail;
@@ -97,8 +98,8 @@ public class SneakerRestController {
     }
 
     @GetMapping("/showCart")
-    public ResponseEntity<List<SneakerDetail>> showCart(@RequestParam Integer accountId) {
-        List<SneakerDetail> sneakerDetailList = sneakerDetailService.findSneakerDetailsByAccount_IdAccount(accountId);
-        return new ResponseEntity<>(sneakerDetailList, HttpStatus.OK);
+    public ResponseEntity<Page<SneakerDetailDto>> showCart(@RequestParam Integer accountId, Pageable pageable) {
+        Page<SneakerDetailDto> sneakerDetailDto = sneakerDetailService.getCustomerCart(accountId, pageable);
+        return new ResponseEntity<>(sneakerDetailDto, HttpStatus.OK);
     }
 }

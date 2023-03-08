@@ -55,4 +55,8 @@ export class AppService {
     // tslint:disable-next-line:max-line-length
     return this.httpClient.get<any>('http://localhost:8080/sneaker/addToCart?sneakerDetailId=' + sneakerDetailId + '&accountId=' + accountId);
   }
+
+  showCart(accountId: number): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/sneaker/showCart?accountId=' + accountId);
+  }
 }

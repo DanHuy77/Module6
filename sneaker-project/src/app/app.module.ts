@@ -11,6 +11,7 @@ import { DetailComponent } from './detail/detail.component';
 import { LoginComponent } from './login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { CartComponent } from './cart/cart.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CartComponent } from './cart/cart.component';
     FooterComponent,
     DetailComponent,
     LoginComponent,
-    CartComponent
+    CartComponent,
+    PaymentComponent
   ],
     imports: [
         BrowserModule,
