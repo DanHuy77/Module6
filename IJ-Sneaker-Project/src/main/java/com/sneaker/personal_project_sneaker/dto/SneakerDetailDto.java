@@ -14,4 +14,6 @@ public interface SneakerDetailDto {
     Integer getDetailId();
 
     String getSize();
+
+    Integer getInCartQuantity();
 }

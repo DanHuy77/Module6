@@ -10,6 +10,8 @@ export class ShareService {
   }
 
   private key: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  private length: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  private totalPrice: BehaviorSubject<any> = new BehaviorSubject<any>('');
 
   getKey(): Observable<any> {
     return this.key.asObservable();
@@ -18,4 +20,22 @@ export class ShareService {
   setKey(key: any): void {
     this.key.next(key);
   }
+
+  getTotalPrice(): Observable<any> {
+    return this.totalPrice.asObservable();
+  }
+
+  setTotalPrice(totalPrice: any): void {
+    this.totalPrice.next(totalPrice);
+  }
+
+  getLength(): Observable<any> {
+    return this.length.asObservable();
+  }
+
+  setLength(length: any): void {
+    this.length.next(length);
+  }
+
+
 }

@@ -6,4 +6,6 @@ export interface SneakerDetailDto {
   productCode?: string;
   color?: string;
   detailId?: number;
+  subTotal?: number;
+  inCartQuantity?: number;
 }

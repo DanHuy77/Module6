@@ -1,11 +1,13 @@
 package com.sneaker.personal_project_sneaker.account;
 
+import com.sneaker.personal_project_sneaker.entity.SneakerDetail;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,6 +47,7 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modify_date")
     private Date modifyDate;
+
     public Account() {
     }
 

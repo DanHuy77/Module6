@@ -59,4 +59,13 @@ export class AppService {
   showCart(accountId: number): Observable<any> {
     return this.httpClient.get<any>('http://localhost:8080/sneaker/showCart?accountId=' + accountId);
   }
+
+  removeItemFromCart(detailId: number): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/sneaker/removeItemFromCart?sneakerDetailId=' + detailId);
+  }
+
+  changeInCartQuantity(detailId: number, newQuantity: number): Observable<any> {
+    return this.httpClient.get<any>
+    ('http://localhost:8080/sneaker/changeInCartQuantity?sneakerDetailId=' + detailId + '&newQuantity=' + newQuantity);
+  }
 }

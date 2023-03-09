@@ -1,7 +1,5 @@
 package com.sneaker.personal_project_sneaker.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sneaker.personal_project_sneaker.account.Account;
 
 import javax.persistence.*;
 
@@ -12,9 +10,7 @@ public class SneakerDetail {
     private Integer id;
     private Integer remainQuantity;
     private String size;
-    @ManyToOne
-    @JsonBackReference
-    private Account account;
+    private boolean outOfStock;
 
     public SneakerDetail() {
     }
@@ -43,11 +39,11 @@ public class SneakerDetail {
         this.size = size;
     }
 
-    public Account getAccount() {
-        return account;
+    public boolean isOutOfStock() {
+        return outOfStock;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setOutOfStock(boolean outOfStock) {
+        this.outOfStock = outOfStock;
     }
 }

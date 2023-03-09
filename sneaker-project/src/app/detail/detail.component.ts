@@ -5,6 +5,7 @@ import {Image} from '../model/Image';
 import {Sneaker} from '../model/Sneaker';
 import {SneakerDetailList} from '../model/Sneaker-detail-list';
 import {TokenService} from '../service/token.service';
+import {ShareService} from '../service/share.service';
 
 @Component({
   selector: 'app-detail',
@@ -23,7 +24,8 @@ export class DetailComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private appService: AppService,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private shareService: ShareService) {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       if (id != null) {
@@ -58,7 +60,12 @@ export class DetailComponent implements OnInit {
 
   addToCart(): void {
     this.appService.addToCart(this.sneakerDetailId, this.accountId).subscribe(data => {
+      console.log(this.sneakerDetailId);
       alert('Đã thêm vào giỏ hàng');
+    }, error => {
+      if (error.status === 400) {
+        alert('Vui lòng chọn size giày');
+      }
     });
   }
 }

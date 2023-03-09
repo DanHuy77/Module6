@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row container-fluid" style="min-height:100vh">
   <main class="col-md-8">
 
     <!--    <article class="card mb-4">-->
@@ -91,47 +91,6 @@
       </div> <!-- card-body.// -->
     </article> <!-- card.// -->
 
-
-    <article class="accordion" id="accordion_pay">
-      <div class="card">
-        <header class="card-header">
-          <img
-            src="https://sedberkdesign.com/wp-content/uploads/2020/06/kisspng-paypal-logo-brand-font-payment-paypal-logo-icon-paypal-icon-logo-png-and-vecto-5b7f273e45e8a9.9067728615350597742864.png"
-            class="float-right" height="24">
-          <label class="form-check collapsed" data-toggle="collapse" data-target="#pay_paynet">
-            <input class="form-check-input" name="payment-option" checked="" type="radio" value="option2">
-            <h6 class="form-check-label">
-              Paypal
-            </h6>
-          </label>
-        </header>
-        <div id="pay_paynet" class="collapse show" data-parent="#accordion_pay">
-          <div class="card-body">
-            <div id="payPalBtn"></div>
-          </div> <!-- card body .// -->
-        </div> <!-- collapse .// -->
-      </div> <!-- card.// -->
-
-      <div class="card">
-        <header class="card-header">
-          <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/cod-1803633-1530847.png" class="float-right"
-               height="24">
-          <label class="form-check" data-toggle="collapse" data-target="#pay_card">
-            <input class="form-check-input" name="payment-option" type="radio" value="option1">
-            <h6 class="form-check-label"> COD </h6>
-          </label>
-        </header>
-        <div id="pay_card" class="collapse" data-parent="#accordion_pay">
-          <div class="card-body">
-            <p>
-              You will process the payment after the product had been checked.
-            </p>
-          </div> <!-- card body .// -->
-        </div> <!-- collapse .// -->
-      </div> <!-- card.// -->
-    </article>
-    <!-- accordion end.// -->
-
   </main> <!-- col.// -->
   <aside class="col-md-4">
     <div class="card shadow">
@@ -139,20 +98,20 @@
         <h4 class="mb-3">Overview</h4>
         <dl class="dlist-align">
           <dt class="text-muted">Delivery:</dt>
-          <dd>Pick-up</dd>
+          <dd>Directly Home</dd>
         </dl>
         <dl class="dlist-align">
           <dt class="text-muted">Delivery type:</dt>
-          <dd>Standart</dd>
+          <dd>Standard</dd>
         </dl>
         <dl class="dlist-align">
           <dt class="text-muted">Payment method:</dt>
-          <dd>Cash</dd>
+          <dd>{{method}}</dd>
         </dl>
         <hr>
         <dl class="dlist-align">
           <dt>Total:</dt>
-          <dd class="h5">$300.50</dd>
+          <dd class="h5">${{totalPrice}}</dd>
         </dl>
         <hr>
         <p class="small mb-3 text-muted">By clicking you are agree with terms of condition </p>
@@ -162,4 +121,5 @@
     </div> <!-- card.// -->
   </aside> <!-- col.// -->
 </div> <!-- row.// -->
+
 
