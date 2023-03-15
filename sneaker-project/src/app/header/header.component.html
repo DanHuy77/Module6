@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-2 col-4">
-          <img style="width: 5rem;"
+          <img class="so-btn" routerLink="/" style="width: 5rem;"
                src="https://firebasestorage.googleapis.com/v0/b/huydn-2918b.appspot.com/o/default.png?alt=media&token=5fc6c06e-0b03-43d7-998e-55a96c0601d5">
         </div>
         <div class="col-lg-6 col-sm-12">
@@ -21,18 +21,20 @@
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="widgets-wrap float-md-end">
             <div class="widget-header  me-3">
-              <a routerLink="/cart" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
-              <span class="badge badge-pill badge-danger notify">0</span>
+              <a routerLink="/cart-and-payment" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+              <span class="badge badge-pill badge-danger notify">{{slotQuantity}}</span>
             </div>
             <div class="widget-header icontext">
-              <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
-              <div class="text">
+              <a *ngIf="isSignedIn == false" href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+              <img style="width: 3rem" class="img-avatar so-btn" *ngIf="isSignedIn == true" routerLink="/payment-history"
+              src="{{avatar}}">
+              <div class="text ms-3">
                 <span class="text-muted">Welcome!</span>
                 <div>
                   <a *ngIf="isSignedIn == false" routerLink="/login">Sign in</a>
-                  <span *ngIf="isSignedIn == true">{{userName}}</span> |
+                  <span class="so-btn" routerLink="/payment-history" *ngIf="isSignedIn == true">{{userName}}</span> |
                   <a routerLink="/" *ngIf="isSignedIn == false"> Register</a>
-                  <a class="so-btn" (click)="signOut()" *ngIf="isSignedIn == true">Sign out</a>
+                  <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="so-btn" *ngIf="isSignedIn == true">Sign out</a>
                 </div>
               </div>
             </div>
@@ -69,6 +71,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#">DC Sneaker</a>
           </li>
+          <li *ngIf="isSignedIn == true" class="nav-item">
+            <a class="nav-link" routerLink="/payment-history">Payment History</a>
+          </li>
         </ul>
 <!--        <span style="margin-left: 20rem; color: white">SleepWalker - Sneaker from famous manufacturer</span>-->
       </div> <!-- collapse .// -->
@@ -76,3 +81,21 @@
   </nav>
 
 </header> <!-- section-header.// -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure to sign out?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button (click)="signOut()" type="button" class="btn btn-danger">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

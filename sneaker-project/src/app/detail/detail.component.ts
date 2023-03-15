@@ -6,6 +6,7 @@ import {Sneaker} from '../model/Sneaker';
 import {SneakerDetailList} from '../model/Sneaker-detail-list';
 import {TokenService} from '../service/token.service';
 import {ShareService} from '../service/share.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-detail',
@@ -21,11 +22,15 @@ export class DetailComponent implements OnInit {
   remainQuantity = 0;
   sneakerDetailId: number;
   accountId: number;
+  isSignedIn = false;
+  length = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
               private appService: AppService,
               private tokenService: TokenService,
-              private shareService: ShareService) {
+              private shareService: ShareService,
+              private router: Router,
+              private toast: ToastrService) {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       if (id != null) {
@@ -41,6 +46,7 @@ export class DetailComponent implements OnInit {
     });
     if (this.tokenService.getToken()) {
       this.accountId = Number(this.tokenService.getIdAccount());
+      this.isSignedIn = true;
     }
   }
 
@@ -61,10 +67,19 @@ export class DetailComponent implements OnInit {
   addToCart(): void {
     this.appService.addToCart(this.sneakerDetailId, this.accountId).subscribe(data => {
       console.log(this.sneakerDetailId);
-      alert('Đã thêm vào giỏ hàng');
+      this.toast.success('Item has been added to cart.');
+      this.appService.getSlotQuantity(this.accountId).subscribe(length => {
+        this.length = length;
+        this.shareService.setLength(this.length.toString());
+      });
     }, error => {
       if (error.status === 400) {
-        alert('Vui lòng chọn size giày');
+        if (this.isSignedIn === true) {
+          this.toast.info('Please choose sneaker size');
+        } else {
+          this.router.navigateByUrl('/login');
+          this.toast.info('You need to sign in to use Cart.');
+        }
       }
     });
   }

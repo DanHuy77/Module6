@@ -18,6 +18,7 @@ public class PurchaseOrder {
     private String phoneNumber;
     @ManyToOne
     private Customer customer;
+    private Integer totalValue;
 
     public PurchaseOrder() {
     }
@@ -84,5 +85,13 @@ public class PurchaseOrder {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Integer getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Integer totalValue) {
+        this.totalValue = totalValue;
     }
 }

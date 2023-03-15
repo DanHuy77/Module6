@@ -8,11 +8,9 @@
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
           <div class="carousel-indicators" style="margin-bottom: -1rem">
             <button (click)="changeImage(item.url)" *ngFor="let item of imageList" style="width: 5rem;" type="button"
-                    class="active rounded ms-1">
+                    class="active rounded ms-1 thumbs-btn">
               <img src="{{item.url}}"
                    class="d-block w-100" alt="Click me!">
-              <!--                style="border: inset #585858 4px; border-radius: 1px"-->
-
             </button>
           </div>
           <div class="carousel-inner">
@@ -68,8 +66,9 @@
             <span *ngIf="chosenSize != null">Size {{chosenSize}} - Remain Quantity: {{remainQuantity}}</span>
           </div>
           <div class="mt-4">
-            <button (click)="addToCart()" style="width: 21rem; height: 4rem; color: white" class="btn btn-dark">Add to Cart <i
-              class="fa-solid fa-arrow-right"></i></button>
+            <button (click)="addToCart()" style="width: 21rem; height: 4rem; color: white" class="btn btn-dark">Add to
+              Cart <i
+                class="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>
       </div>

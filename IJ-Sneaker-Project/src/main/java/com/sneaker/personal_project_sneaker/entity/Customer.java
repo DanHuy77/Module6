@@ -1,5 +1,6 @@
 package com.sneaker.personal_project_sneaker.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sneaker.personal_project_sneaker.account.Account;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Customer {
     private String address;
     private String birthday;
     @OneToOne
+    @JsonBackReference
     private Account account;
     private boolean deleted;
 

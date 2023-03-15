@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Token} from '@angular/compiler';
 import {TokenService} from '../service/token.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
               private appService: AppService,
               private router: Router,
               private route: ActivatedRoute,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class LoginComponent implements OnInit {
     this.appService.login(this.formGroup.value).subscribe(data => {
       if (data.status === 202) {
         window.localStorage.clear();
-        alert('Sai tài khoản');
+        this.toast.error('Invalid Username or Password, please try again.');
         this.formGroup.reset();
       } else {
         console.log(data);
@@ -49,8 +51,8 @@ export class LoginComponent implements OnInit {
         this.tokenService.setEmail(data.email);
         this.tokenService.setToken(data.token);
         this.tokenService.setRole(data.roles);
+        this.tokenService.setAvatar(data.avatar);
         console.log(data.id);
-        alert('Đã đăng nhập');
         this.username = localStorage.getItem('username');
         console.log(this.username);
         location.reload();

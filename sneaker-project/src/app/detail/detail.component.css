@@ -28,3 +28,7 @@
   background-color: black;
   color: white;
 }
+
+.thumbs-btn:focus{
+  border: white inset;
+}

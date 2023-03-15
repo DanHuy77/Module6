@@ -4,14 +4,14 @@ import {IndexComponent} from './index/index.component';
 import {DetailComponent} from './detail/detail.component';
 import {LoginComponent} from './login/login.component';
 import {CartComponent} from './cart/cart.component';
-import {PaymentComponent} from './payment/payment.component';
+import {PurchaseHistoryComponent} from './purchase-history/purchase-history.component';
 
 const routes: Routes = [
   {path: '', component: IndexComponent},
   {path: 'detail/:id', component: DetailComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'cart', component: CartComponent},
-  {path: 'checkout', component: PaymentComponent}
+  {path: 'cart-and-payment', component: CartComponent},
+  {path: 'payment-history', component: PurchaseHistoryComponent}
 ];
 
 @NgModule({

@@ -1,21 +1,18 @@
 package com.sneaker.personal_project_sneaker.controller;
 
 import com.sneaker.personal_project_sneaker.account.Account;
-import com.sneaker.personal_project_sneaker.dto.SneakerDetailDto;
-import com.sneaker.personal_project_sneaker.dto.SneakerDto;
-import com.sneaker.personal_project_sneaker.entity.SlotInCart;
-import com.sneaker.personal_project_sneaker.entity.Sneaker;
-import com.sneaker.personal_project_sneaker.entity.SneakerDetail;
-import com.sneaker.personal_project_sneaker.service.IAccountService;
-import com.sneaker.personal_project_sneaker.service.ISlotInCartService;
-import com.sneaker.personal_project_sneaker.service.ISneakerDetailService;
-import com.sneaker.personal_project_sneaker.service.ISneakerService;
+import com.sneaker.personal_project_sneaker.dto.*;
+import com.sneaker.personal_project_sneaker.entity.*;
+import com.sneaker.personal_project_sneaker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/sneaker")
@@ -30,6 +27,10 @@ public class SneakerRestController {
     private IAccountService accountService;
     @Autowired
     private ISlotInCartService slotInCartService;
+    @Autowired
+    private IPurchaseOrderService purchaseOrderService;
+    @Autowired
+    private IPurchaseDetailOrderService purchaseDetailOrderService;
 
     @GetMapping("")
     public ResponseEntity<Page<SneakerDto>> getAllSneaker(@RequestParam(defaultValue = "") String key) {
@@ -137,5 +138,62 @@ public class SneakerRestController {
         slotInCart.setInCartQuantity(newQuantity);
         slotInCartService.save(slotInCart);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<HttpStatus> checkout(@RequestBody List<CheckoutInfoDto> checkoutInfoDtoList, Pageable pageable) {
+        PurchaseOrder purchaseOrder = new PurchaseOrder();
+        Customer customer = checkoutInfoDtoList.get(0).getCustomer();
+        purchaseOrder.setCustomer(customer);
+        purchaseOrder.setTotalValue(checkoutInfoDtoList.get(0).getTotalValue());
+        purchaseOrder.setOrderDate(LocalDate.now().toString());
+        purchaseOrder.setPaymentStatus(true);
+        purchaseOrder.setPhoneNumber(checkoutInfoDtoList.get(0).getDeliveryPhoneNumber());
+        purchaseOrder.setDeliveryAddress(checkoutInfoDtoList.get(0).getDeliveryAddress());
+        purchaseOrderService.save(purchaseOrder);
+        int size = purchaseOrderService.findAll(pageable).getContent().size();
+        PurchaseOrder savedPurchaseOrder = purchaseOrderService.findAll(pageable).getContent().get(size - 1);
+        for (int i = 0; i < checkoutInfoDtoList.size(); i++) {
+            PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail();
+            purchaseOrderDetail.setPurchaseOrder(savedPurchaseOrder);
+            SneakerDetail sneakerDetail = sneakerDetailService.findById(checkoutInfoDtoList.get(i).getDetailId());
+            sneakerDetail.setRemainQuantity(sneakerDetail.getRemainQuantity() - checkoutInfoDtoList.get(i).getInCartQuantity());
+            if (sneakerDetail.getRemainQuantity() == 0) {
+                sneakerDetail.setOutOfStock(true);
+            }
+            Sneaker sneaker = sneakerService.findById(checkoutInfoDtoList.get(i).getSneakerId());
+            purchaseOrderDetail.setSneakerDetail(sneakerDetail);
+            purchaseOrderDetail.setSneaker(sneaker);
+            purchaseOrderDetail.setQuantity(checkoutInfoDtoList.get(i).getInCartQuantity());
+            purchaseDetailOrderService.save(purchaseOrderDetail);
+            SlotInCart slotInCart = slotInCartService.findSlotInCartBySneakerDetail_Id(checkoutInfoDtoList.get(i).getDetailId());
+            slotInCartService.delete(slotInCart.getSlotId());
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/paymentHistory")
+    public ResponseEntity<Page<PaymentHistoryDto>> getCustomerPaymentHistory(@RequestParam Integer customerId, Pageable pageable) {
+        Page<PaymentHistoryDto> paymentHistoryDtoPage = purchaseOrderService.getPurchaseOrderByCustomerId(customerId, pageable);
+        if (paymentHistoryDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(paymentHistoryDtoPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/paymentDetail")
+    public ResponseEntity<Page<PaymentHistoryDetailDto>> getPaymentDetail(@RequestParam Integer purchaseOrderId, Pageable pageable) {
+        Page<PaymentHistoryDetailDto> paymentHistoryDetailDtoPage = purchaseOrderService.getPurchaseOrderDetail(purchaseOrderId, pageable);
+        if (paymentHistoryDetailDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(paymentHistoryDetailDtoPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/countSlotInCart")
+    public ResponseEntity<Integer> getSlotInCartNumber(@RequestParam Integer idAccount) {
+        Integer length = slotInCartService.countSlotInCartByAccount_IdAccount(idAccount);
+        return new ResponseEntity<>(length, HttpStatus.OK);
     }
 }

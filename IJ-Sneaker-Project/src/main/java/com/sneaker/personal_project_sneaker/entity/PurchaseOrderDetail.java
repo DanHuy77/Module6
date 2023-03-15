@@ -12,6 +12,8 @@ public class PurchaseOrderDetail {
     @ManyToOne
     private PurchaseOrder purchaseOrder;
     private Integer quantity;
+    @OneToOne
+    private SneakerDetail sneakerDetail;
 
     public PurchaseOrderDetail() {
     }
@@ -32,14 +34,6 @@ public class PurchaseOrderDetail {
         this.sneaker = sneaker;
     }
 
-    public PurchaseOrder getOrder() {
-        return purchaseOrder;
-    }
-
-    public void setOrder(PurchaseOrder purchaseOrder) {
-        this.purchaseOrder = purchaseOrder;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -47,4 +41,21 @@ public class PurchaseOrderDetail {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
+    }
+
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+
+    public SneakerDetail getSneakerDetail() {
+        return sneakerDetail;
+    }
+
+    public void setSneakerDetail(SneakerDetail sneakerDetail) {
+        this.sneakerDetail = sneakerDetail;
+    }
 }
+

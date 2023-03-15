@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Sneaker} from './model/Sneaker';
 import {LoginForm} from './model/loginForm';
 import {JwtResponse} from './dto/JwtResponse';
+import {SneakerDetailDto} from './dto/sneaker-detail-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -67,5 +68,26 @@ export class AppService {
   changeInCartQuantity(detailId: number, newQuantity: number): Observable<any> {
     return this.httpClient.get<any>
     ('http://localhost:8080/sneaker/changeInCartQuantity?sneakerDetailId=' + detailId + '&newQuantity=' + newQuantity);
+  }
+
+  getCustomerInfo(idCustomer: string): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/customer/customerInfo?id=' + idCustomer);
+  }
+
+  checkout(sneakerInCart: SneakerDetailDto[]): Observable<any> {
+    console.log(sneakerInCart);
+    return this.httpClient.post('http://localhost:8080/sneaker/checkout', sneakerInCart);
+  }
+
+  getCustomerPaymentHistory(idCustomer: string): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/sneaker/paymentHistory?customerId=' + idCustomer);
+  }
+
+  getPaymentDetail(purchaseOrderId: number): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/sneaker/paymentDetail?purchaseOrderId=' + purchaseOrderId);
+  }
+
+  getSlotQuantity(accountId: number): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/sneaker/countSlotInCart?idAccount=' + accountId);
   }
 }

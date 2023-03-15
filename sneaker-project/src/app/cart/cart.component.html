@@ -1,84 +1,213 @@
-<div class="container-fluid" style="min-height:100vh">
-<div class="row">
-  <div class="col-8">
-    <div *ngIf="isCartEmpty == false" class="basket w-100">
-      <div class="basket-labels">
-        <ul>
-          <li class="item item-heading">Item</li>
-          <li class="price">Price</li>
-          <li class="quantity">Quantity</li>
-          <li class="subtotal">Subtotal</li>
-        </ul>
+<div class="container mb-5 mt-5" style="min-height:100vh">
+  <div *ngIf="isCartEmpty == true">
+    <div style="min-height: 5rem" class="row col-md-12 alert-warning">
+      <span style="font-size: 5rem; text-align: center">Your cart is empty</span>
+    </div>
+    <div class="d-grid gap-2 col-2 mx-auto">
+      <a routerLink="/" class="btn btn-color mt-2" style="color: white; width: 10rem;"> Home </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <div class="col-12 mb-2" *ngIf="isCartEmpty == false">
+        <div class="card card-header rounded">
+          <h5 style="padding-top: 0.5rem">Your cart</h5>
+        </div>
       </div>
-      <div *ngFor="let item of sneakersInCart index as index" class="basket-product">
-        <span hidden>{{index}}</span>
-        <div class="item">
-          <div class="product-image">
-            <img src="{{item.url}}" alt="Placholder Image 2" class="product-frame">
+      <div *ngIf="isCartEmpty == false" class="basket w-100">
+        <div class="basket-labels">
+          <ul>
+            <li class="item item-heading">Item</li>
+            <li class="price">Price</li>
+            <li class="quantity">Quantity</li>
+            <li class="subtotal">Subtotal</li>
+          </ul>
+        </div>
+        <div *ngFor="let item of sneakersInCart index as index" class="basket-product">
+          <span hidden>{{index}}</span>
+          <div class="item">
+            <div class="product-image">
+              <img src="{{item.url}}" alt="Placholder Image 2" class="product-frame">
+            </div>
+            <div class="product-details">
+              <h1><strong><span class="item-quantity">{{item.sneakerName}}</span></strong></h1>
+              <p><strong>{{item.color}}, Size {{item.size}}</strong></p>
+              <p>Product Code - {{item.productCode}}</p>
+            </div>
           </div>
-          <div class="product-details">
-            <h1><strong><span class="item-quantity">{{item.sneakerName}}</span></strong></h1>
-            <p><strong>{{item.color}}, Size {{item.size}}</strong></p>
-            <p>Product Code - {{item.productCode}}</p>
+          <div class="price">{{item.price}}</div>
+          <div class="quantity">
+            <input #quantity (change)="changeQuantity(quantity.valueAsNumber, item.detailId)" type="number"
+                   [value]="item.inCartQuantity" min="1"
+                   class="quantity-field" id="quantity">
+          </div>
+          <div class="subtotal">{{item.subTotal}}</div>
+          <div class="remove">
+            <button data-bs-toggle="modal" data-bs-target="#removeItem"
+                    (click)="passRemoveInfo(item.detailId, item.sneakerName, item.size)">Remove
+            </button>
           </div>
         </div>
-        <div class="price">{{item.price}}</div>
-        <div class="quantity">
-          <input #quantity (change)="changeQuantity(quantity.valueAsNumber, item.detailId)" type="number" [value]="item.inCartQuantity" min="1"
-                 class="quantity-field">
+      </div>
+    </div>
+    <div class="col-4" *ngIf="isCartEmpty == false">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="mb-3">Overview</h4>
+          <dl class="dlist-align">
+            <dt class="text-muted">Delivery:</dt>
+            <dd>Directly Home</dd>
+          </dl>
+          <dl class="dlist-align">
+            <dt class="text-muted">Delivery type:</dt>
+            <dd>Standard</dd>
+          </dl>
+          <dl class="dlist-align">
+            <dt class="text-muted">Payment method:</dt>
+            <dd>{{method}}</dd>
+          </dl>
+          <hr>
+          <dl class="dlist-align">
+            <dt>Total:</dt>
+            <dd class="h5">${{cartSubtotal}}</dd>
+          </dl>
+
+        </div> <!-- card-body.// -->
+      </div>
+      <article class="card mb-4" *ngIf="isCartEmpty == false">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Customer info</h4>
+          <div *ngIf="isSignedIn == true">
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label class="font-weight-bold">Name</label>
+                <span>{{customer.customerName}}</span>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="font-weight-bold">Address</label>
+                <span>{{customer.address}}</span>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="font-weight-bold">Phone</label>
+                <span>{{customer.phoneNumber}}</span>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="font-weight-bold">Email</label>
+                <span>{{customer.email}}</span>
+              </div>
+            </div> <!-- row.// -->
+          </div>
+          <div *ngIf="isSignedIn == false">
+            <h4>You are not signed in yet</h4>
+          </div>
+        </div> <!-- card-body.// -->
+      </article>
+      <article class="card mb-4" *ngIf="isCartEmpty == false">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Delivery info</h4>
+          <form action="">
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label>Address*</label>
+                <input #address type="text" placeholder="Type here" class="form-control border">
+              </div>
+              <div class="form-group col-sm-6">
+                <label>Phone Number*</label>
+                <input #phone (change)="setDeliveryInfo(address.value, phone.value)" type="text" placeholder="Type here"
+                       class="form-control border">
+              </div>
+            </div> <!-- row.// -->
+          </form>
+        </div> <!-- card-body.// -->
+      </article><!-- card.// --><!-- card.// -->
+
+    </div>
+
+    <div class="col-12 mb-2 mt-5" *ngIf="isCartEmpty == false">
+      <div class="card card-header rounded">
+        <h5 style="padding-top: 0.5rem">Checkout Sector</h5>
+      </div>
+    </div>
+
+
+    <div class="col-6" *ngIf="isCartEmpty == false">
+      <div class="card">
+        <header class="card-header">
+          <img src="https://cdn-icons-png.flaticon.com/512/2897/2897853.png" class="float-right"
+               style="max-width: 2rem">
+          <label (click)="changeMethodToCod()" class="form-check collapsed" data-toggle="collapse"
+                 data-target="#pay_cod">
+            <input class="form-check-input" name="payment-option" type="radio" value="option1">
+            <h6 class="form-check-label"> COD </h6>
+          </label>
+        </header>
+
+        <div id="pay_cod" class="accordion-collapse collapse">
+          <div class="card-body">
+            <div class="alert-warning rounded">
+              <span style="padding-left: 1rem">Cash On Delivery</span>
+              <p style="padding-left: 1rem">Process the payment after received product
+              </p>
+              <p style="padding-left: 1rem">Total: ${{cartSubtotal}}
+                <br>
+              </p>
+            </div>
+            <div class="row">
+              <div class="d-grid gap-2">
+                <button (click)="checkoutCOD()" style="background-color: rgba(0,0,0,0.8); height: 3rem;"
+                        class="btn mt-3 wc-btn">Confirm
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="subtotal">{{item.subTotal}}</div>
-        <div class="remove">
-          <button (click)="removeItemFromCart(item.detailId, item.sneakerName, item.size)">Remove</button>
-        </div>
+
+      </div> <!-- card.// -->
+    </div>
+    <div class="col-6" *ngIf="isCartEmpty == false">
+      <div class="card">
+        <header class="card-header">
+          <img style="max-width: 2rem"
+               src="https://sedberkdesign.com/wp-content/uploads/2020/06/kisspng-paypal-logo-brand-font-payment-paypal-logo-icon-paypal-icon-logo-png-and-vecto-5b7f273e45e8a9.9067728615350597742864.png"
+               class="float-right">
+          <label (click)="changeMethodToPaypal(cartSubtotal, sneakersInCart)" *ngIf="!isClicked" class="form-check"
+                 data-toggle="collapse" data-target="#payPal">
+            <input class="form-check-input"
+                   name="payment-option" type="radio" value="option2">
+
+            <h6 class="form-check-label">
+              Paypal
+            </h6>
+          </label>
+          <label (click)="changeMethodToCod2(cartSubtotal)" *ngIf="isClicked" class="form-check" data-toggle="collapse"
+                 data-target="#payPal" data-bs-parent="#accordionExample">
+            <input class="form-check-input" name="payment-option" type="radio" value="option3">
+            <h6 class="form-check-label">
+              Paypal
+            </h6>
+          </label>
+        </header>
+        <div id="payPal" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></div>
+      </div> <!-- card.// -->
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="removeItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Do you want to remove item {{sneakerName}}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a style="color: white" (click)="removeItemFromCart()" type="button" class="btn btn-danger"
+           data-bs-dismiss="modal">Confirm</a>
       </div>
     </div>
   </div>
-  <div class="col-4">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="mb-3">Overview</h4>
-        <dl class="dlist-align">
-          <dt class="text-muted">Delivery:</dt>
-          <dd>Directly Home</dd>
-        </dl>
-        <dl class="dlist-align">
-          <dt class="text-muted">Delivery type:</dt>
-          <dd>Standard</dd>
-        </dl>
-        <dl class="dlist-align">
-          <dt class="text-muted">Payment method:</dt>
-          <dd>{{method}}</dd>
-        </dl>
-        <hr>
-        <dl class="dlist-align">
-          <dt>Total:</dt>
-          <dd class="h5">${{cartSubtotal}}</dd>
-        </dl>
-        <hr>
-        <p class="small mb-3 text-muted">By clicking you are agree with terms of condition </p>
-        <a href="#" class="btn btn-primary btn-block"> Button </a>
-
-      </div> <!-- card-body.// -->
-    </div> <!-- card.// -->
-  </div> <!-- col.// -->
 </div>
-<!--  <aside *ngIf="isCartEmpty == false">-->
-<!--    <div class="summary card">-->
-<!--      <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>-->
-<!--      <div class="summary-total">-->
-<!--        <div class="total-title">Total</div>-->
-<!--        <div class="total-value final-value" id="basket-total">{{cartSubtotal}}</div>-->
-<!--      </div>-->
-<!--      <div class="summary-checkout">-->
-<!--        <a href="/checkout" class="checkout-cta btn" style="background-color: rgba(0,0,0,0.28)">Go to Secure Checkout</a>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </aside>-->
-  <div *ngIf="isCartEmpty == true">
-      <div style="min-height: 5rem" class="row col-md-12 alert-warning">
-        <span style="font-size: 5rem; text-align: center">Your cart is empty</span>
-      </div>
-    </div>
-</div>
-

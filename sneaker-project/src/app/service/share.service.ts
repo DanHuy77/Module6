@@ -12,6 +12,7 @@ export class ShareService {
   private key: BehaviorSubject<any> = new BehaviorSubject<any>('');
   private length: BehaviorSubject<any> = new BehaviorSubject<any>('');
   private totalPrice: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  private isChanged: BehaviorSubject<any> = new BehaviorSubject<any>(false);
 
   getKey(): Observable<any> {
     return this.key.asObservable();
@@ -38,4 +39,11 @@ export class ShareService {
   }
 
 
+  setIsChanged(changeInCart: boolean): void {
+    this.isChanged.next(changeInCart);
+  }
+
+  quantityIsChanged(): Observable<any> {
+    return this.isChanged.asObservable();
+  }
 }

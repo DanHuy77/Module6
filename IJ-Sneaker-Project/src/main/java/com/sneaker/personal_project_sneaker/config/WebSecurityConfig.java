@@ -45,11 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.authorizeRequests().antMatchers("api/customer/**", "api/category/**", "api/sneaker/**").access("hasRole('ADMIN')");
-//        httpSecurity.authorizeRequests().antMatchers("api/change-avatar", "api/product/**").access("hasAnyRole('ADMIN','USER')");
+//        httpSecurity.authorizeRequests().antMatchers("api/customer/**", "api/category/**", "api/sneaker/**").access("hasRole('ADMIN')");
+//        httpSecurity.authorizeRequests().antMatchers("/**").access("hasAnyRole('USER')");
         httpSecurity.cors().and().csrf().disable()// huỷ CrossOrigin
                 .authorizeRequests()
-                .antMatchers("/api/public/**", "/sneaker/**", "/image/**") // cho tất cả các role vào
+                .antMatchers("/api/public/**", "/sneaker/**", "/image/**", "/customer/**") // cho tất cả các role vào
                 .permitAll()
                 .anyRequest()
                 .authenticated()// khi có account đăng nhập

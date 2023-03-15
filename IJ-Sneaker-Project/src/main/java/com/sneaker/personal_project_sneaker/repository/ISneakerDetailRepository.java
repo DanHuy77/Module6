@@ -20,6 +20,7 @@ public interface ISneakerDetailRepository extends JpaRepository<SneakerDetail, I
 
     @Query(value = "select sneaker.sneaker_name sneakerName, " +
             "sneaker.color, " +
+            "sneaker.sneaker_id sneakerId, " +
             "sneaker.product_code productCode, " +
             "sneaker.price, " +
             "image.url, " +
@@ -39,6 +40,7 @@ public interface ISneakerDetailRepository extends JpaRepository<SneakerDetail, I
             , nativeQuery = true,
             countQuery = "select sneaker.sneaker_name sneakerName, " +
                     "sneaker.color, " +
+                    "sneaker.sneaker_id sneakerId, " +
                     "sneaker.product_code productCode, " +
                     "sneaker.price, " +
                     "image.url, " +

@@ -1,5 +1,7 @@
+import {Customer} from '../model/customer';
+
 export interface SneakerDetailDto {
-  size?: number;
+  size?: string;
   url?: string;
   sneakerName?: string;
   price?: number;
@@ -8,4 +10,9 @@ export interface SneakerDetailDto {
   detailId?: number;
   subTotal?: number;
   inCartQuantity?: number;
+  sneakerId?: number;
+  deliveryAddress?: string;
+  deliveryPhoneNumber?: string;
+  totalValue?: number;
+  customer?: Customer;
 }

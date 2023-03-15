@@ -38,4 +38,9 @@ public class SlotInCartService implements ISlotInCartService {
     public SlotInCart findSlotInCartBySneakerDetail_Id(Integer id) {
         return slotInCartRepository.findSlotInCartBySneakerDetail_Id(id);
     }
+
+    @Override
+    public Integer countSlotInCartByAccount_IdAccount(Integer idAccount) {
+        return slotInCartRepository.countSlotInCartByAccount_IdAccount(idAccount);
+    }
 }

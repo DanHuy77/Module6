@@ -4,6 +4,8 @@ import {AppService} from '../app.service';
 import {Image} from '../model/Image';
 import {SneakerDto} from '../dto/Sneaker-dto';
 import {ShareService} from '../service/share.service';
+import {TokenService} from '../service/token.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-index',
@@ -13,9 +15,12 @@ import {ShareService} from '../service/share.service';
 export class IndexComponent implements OnInit {
   sneakerList: SneakerDto[] = [];
   keySearch = '';
+  isSignedIn = false;
 
   constructor(private appService: AppService,
-              private shareService: ShareService) {
+              private shareService: ShareService,
+              private tokenService: TokenService,
+              private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -27,7 +32,6 @@ export class IndexComponent implements OnInit {
 
   getSneaker(key: string): void {
     this.appService.searchSneakerByKey(key).subscribe(sneakers => {
-      console.log(this.keySearch);
       this.sneakerList = sneakers.content;
     });
   }
